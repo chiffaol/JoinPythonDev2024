@@ -2,6 +2,48 @@ import random
 from urllib.request import urlopen
 import argparse
 from cowsay import *
+from io import StringIO
+
+cow = read_dot_cow(StringIO("""
+$the_cow = <<EOC;
+         $thoughts
+          $thoughts
+░░░░░▄▀▀▀▄░░░░░░░
+▄███▀░◐░░░▌░░░░░░
+░░░░▌░░░░░▐░░░░░░░
+░░░░▐░░░░░▐░░░░░░░
+░░░░▌░░░░░▐▄▄░░░░░
+░░░░▌░░░░▄▀▒▒▀▀▀▀▄
+░░░▐░░░░▐▒▒▒▒▒▒▒▒▀▀▄
+░░░▐░░░░▐▄▒▒▒▒▒▒▒▒▒▒▀▄
+░░░░▀▄░░░░▀▄▒▒▒▒▒▒▒▒▒▒▀▄
+░░░░░░▀▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▀▄
+░░░░░░░░░░░▌▌▌▌░░░░░
+░░░░░░░░░░░▌▌░▌▌░░░░░
+░░░░░░░░░▄▄▌▌▄▌▌░░░░░
+EOC
+"""))
+
+def goose_say(text):
+    """
+    simple cowsay goose analoge
+    """
+    goose = """
+        ░░░░░▄▀▀▀▄░░░░░░░
+        ▄███▀░◐░░░▌░░░░░░
+        ░░░░▌░░░░░▐░░░░░░░
+        ░░░░▐░░░░░▐░░░░░░░
+        ░░░░▌░░░░░▐▄▄░░░░░
+        ░░░░▌░░░░▄▀▒▒▀▀▀▀▄
+        ░░░▐░░░░▐▒▒▒▒▒▒▒▒▀▀▄
+        ░░░▐░░░░▐▄▒▒▒▒▒▒▒▒▒▒▀▄
+        ░░░░▀▄░░░░▀▄▒▒▒▒▒▒▒▒▒▒▀▄
+        ░░░░░░▀▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▀▄
+        ░░░░░░░░░░░▌▌▌▌░░░░░
+        ░░░░░░░░░░░▌▌░▌▌░░░░░
+        ░░░░░░░░░▄▄▌▌▄▌▌░░░░░
+    """
+    
 
 def bullscows(guess: str, secret: str) -> (int, int):
     """
@@ -28,7 +70,7 @@ def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
     secret = random.choice(words)
     
     while b != len(secret):
-        guess = ask(cowsay("Введите слово:", cow=get_random_cow()), words)
+        guess = ask(cowsay("Введите слово:", cowfile=cow), words)
         ask_cnt += 1
 
         (b, c) = bullscows(guess, secret)
