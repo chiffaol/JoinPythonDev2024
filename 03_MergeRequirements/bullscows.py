@@ -1,6 +1,7 @@
 import random
 from urllib.request import urlopen
 import argparse
+from cowsay import *
 
 def bullscows(guess: str, secret: str) -> (int, int):
     """
@@ -27,7 +28,7 @@ def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
     secret = random.choice(words)
     
     while b != len(secret):
-        guess = ask("Введите слово: ", words)
+        guess = ask(cowsay("Введите слово:", cow=get_random_cow()), words)
         ask_cnt += 1
 
         (b, c) = bullscows(guess, secret)
@@ -47,11 +48,11 @@ def ask(prompt: str, valid: list[str] = None) -> str:
     """
     if valid:
         while True:
-            tmp = input(prompt)
+            tmp = input(prompt + "\n")
             if tmp in valid:
                 break
     else:
-        tmp = input(prompt)
+        tmp = input(prompt + "\n")
     
     return tmp
 
@@ -59,7 +60,7 @@ def inform(format_string: str, bulls: int, cows: int) -> None:
     """
     inform("Быки: {}, Коровы: {}", b, c)
     """
-    print(format_string.format(bulls, cows))
+    print(cowsay(format_string.format(bulls, cows), cow=get_random_cow()))
 
 def get_words(url: str) -> list:
     """
